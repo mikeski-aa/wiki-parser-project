@@ -27,29 +27,16 @@ app.use("/users", usersRouter);
 
 // testing route for getting an item
 app.get("/parse", async (req, res, next) => {
-  const url = "https://wiki.warthunder.com/Category:Britain_aircraft";
+  const url = "https://wiki.warthunder.com/Category:Germany_aircraft";
 
   try {
     const response = await axios.get(url);
     const html = response.data;
     let array = [];
-    // // load into cheerio context
-    // const $ = cheerio.load(html);
-    // const tableData = [];
-    // $("table > tbody > tr").each(function () {
-    //   const row = $(this)
-    //     .find("td")
-    //     .map((i, el) => $(el).text())
-    //     .get();
-    //   tableData.push(row);
-    // });
-
-    // console.log(tableData);
-
     const $ = cheerio.load(html);
 
     // need to do a double loop for 1 to last-child
-
+    // there is probably a way to find max child number but Cheerio docs gave me brain damage
     for (let x = 1; x < 24; x++) {
       for (let y = 1; y < 24; y++) {
         const model = $(
@@ -58,40 +45,18 @@ app.get("/parse", async (req, res, next) => {
           .text()
           .trim();
 
-        if (model == undefined || model == null) {
-          return;
+        if (model === "") {
+          break;
         } else {
           array.push(model);
         }
       }
     }
-
-    // const model = $(
-    //   "#mw-pages > div > div > div:nth-child(21) > ul > li:nth-child(1) > a"
-    // )
-    //   .text()
-    //   .trim();
-
-    // let x = model.split(" ");
     console.log(array);
     res.send(array);
   } catch (err) {
     next(err);
   }
-
-  // await axios
-  //   .get(url)
-  //   .then((response) => {
-  //     const html = response.data;
-
-  //     // load into cheerio context
-  //     const $ = cheerio.load(html);
-  //     const model = $("h1").text().trim();
-  //     console.log(model);
-  //   })
-  //   .catch((err) => {
-  //     next(err);
-  //   });
 });
 
 // catch 404 and forward to error handler
