@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const VehicleModelSchema = new Schema({
   name: { type: String, required: true, maxLength: 100 },
   vehicle_img: { type: String },
+  dynamic_url: { type: String },
 });
 
 // virtual for url
