@@ -6,11 +6,26 @@ var logger = require("morgan");
 const bodyParser = require("body-parser");
 const cheerio = require("cheerio");
 const axios = require("axios");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
+
+// mongoDB connect setup
+mongoose.set("strictQuery", false);
+const mongoDB = process.env.MONGODB_URL;
+
+// wait for db to connect, logging an error if there is a problem
+main()
+  .then(console.log("mongoDB connecting"))
+  .finally("mongoDB connected")
+  .catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
