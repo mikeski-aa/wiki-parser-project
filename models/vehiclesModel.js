@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const VehicleModelSchema = new Schema({
-  name: { type: String, required: true },
-  vehicle_img: { type: String, required: false },
+  name: { type: String, required: true, maxLength: 100 },
+  vehicle_img: { type: String },
 });
 
 // virtual for url
@@ -12,4 +12,4 @@ VehicleModelSchema.virtual("url").get(function () {
   return `/${this.id}`;
 });
 
-module.exports = mongoose.model("Vehicles", VehicleModelSchema);
+module.exports = mongoose.model("Vehicle", VehicleModelSchema);
