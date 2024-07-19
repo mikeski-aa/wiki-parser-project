@@ -1,4 +1,4 @@
-// const Vehicles = require("../models/vehiclesModel");
+const Airplanes = require("../models/airplaneModel");
 const asyncHandler = require("express-async-handler");
 // const bodyParser = require("body-parser");
 // const cheerio = require("cheerio");
@@ -12,7 +12,13 @@ const asyncHandler = require("express-async-handler");
 // GET request handle
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
-  res.send("VEHICLE LIST NOT IMPLEMENTED");
+  const airplanes = await Airplanes.find({})
+    .sort({ turn_time_RB_upgraded: 1 })
+    .exec();
+  res.render("vehicle_list_view", {
+    title: "Max upgraded speed",
+    airplanes: airplanes,
+  });
 });
 
 exports.hello = asyncHandler(async (req, res, next) => {
