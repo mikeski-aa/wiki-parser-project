@@ -12,8 +12,10 @@ const asyncHandler = require("express-async-handler");
 // GET request handle
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
-  const airplanes = await Airplanes.find({})
-    .sort({ turn_time_RB_upgraded: 1 })
+  const airplanes = await Airplanes.find({
+    max_speed_RB_upgraded: { $gt: 1 },
+  })
+    .sort({ max_speed_RB_upgraded: -1 })
     .exec();
   res.render("vehicle_list_view", {
     title: "Max upgraded speed",
