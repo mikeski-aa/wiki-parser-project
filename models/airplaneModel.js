@@ -16,7 +16,7 @@ const AirplaneModelSchema = new Schema({
 // virtual for url
 
 AirplaneModelSchema.virtual("url").get(function () {
-  return `/${this.id}`;
+  return `/vehicles/${this.id}`;
 });
 
 module.exports = mongoose.model("Airplane", AirplaneModelSchema);

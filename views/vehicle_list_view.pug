@@ -7,7 +7,7 @@ block content
                 each airplane in airplanes 
                     li  
                         div(class='container')
-                            p #{airplane.name}
+                            a(href=airplane.url) #{airplane.name}
                             p Upgraded turn time #{airplane.turn_time_RB_upgraded}s
                             p Stock turn time #{airplane.turn_time_RB_stock}s
                             p Stock speed #{airplane.max_speed_RB_stock} Km/h

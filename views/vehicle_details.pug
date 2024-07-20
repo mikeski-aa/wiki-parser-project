@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+    div(class="mainCont")
+        h1=title 
+        p=airplane.name
+        img(src=airplane.vehicle_image, width='200px')
+        img(src=airplane.dynamic_url, width='200px')
+        if error
+            p=error
