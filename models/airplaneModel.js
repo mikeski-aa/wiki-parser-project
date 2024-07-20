@@ -9,8 +9,15 @@ const AirplaneModelSchema = new Schema({
   turn_time_RB_upgraded: { type: Number },
   max_speed_RB_stock: { type: Number },
   max_speed_RB_upgraded: { type: Number },
+  max_climb_RB_stock: { type: Number },
+  max_climb_RB_upgraded: { type: Number },
   sped_alt: { type: Number },
   rating_RB: { type: Number },
+  category: { type: String },
+  squadron: { type: Boolean },
+  premium: { type: Boolean },
+  nation: { type: String },
+  rank: { type: String },
 });
 
 // virtual for url
