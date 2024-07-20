@@ -13,6 +13,7 @@ const AirplaneModelSchema = new Schema({
   category: { type: Array },
   squadron: { type: Boolean },
   premium: { type: Boolean },
+  market: { type: Boolean },
   nation: { type: String },
   rank: { type: String },
   wiki_url: { type: String },
