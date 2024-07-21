@@ -38,7 +38,7 @@ exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
 // needs to get fixed. probably need to pass through plane RB with post request
 exports.vehicle_compare_post = [
   body("br").isLength({ min: 1 }).trim(),
-  body("plane").isLength({ min: 1 }),
+  body("plane").isLength({ min: 1 }).trim(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -47,17 +47,51 @@ exports.vehicle_compare_post = [
     const plane = stat_helper.parsePOSTstring(req.body.plane);
     // convert battle ratings, return as object
     const ratingRangeObj = stat_helper.convertRating(plane.rating, req.body.br);
+    let items;
 
-    const items = await Airplanes.find(
-      {
-        rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
-      },
-      "name rating_RB",
-      {}
-    ).exec();
+    if (req.body.radioChoice == "speedDesc") {
+      console.log(req.body.radioChoice);
+      items = await Airplanes.find(
+        {
+          rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
+        },
 
-    // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
-    // const airplanes = await Airplanes.find({}, "name", {}).exec();
+        {}
+      )
+        .sort({ max_speed_RB: -1 })
+        .exec();
+    } else if (req.body.radioChoice == "turnAsc") {
+      console.log(req.body.radioChoice);
+      items = await Airplanes.find(
+        {
+          rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
+        },
+
+        {}
+      )
+        .sort({ turn_time_RB: 1 })
+        .exec();
+    } else if (req.body.radioChoice == "climbDesc") {
+      console.log(req.body.radioChoice);
+      items = await Airplanes.find(
+        {
+          rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
+        },
+
+        {}
+      )
+        .sort({ max_climb_RB: -1 })
+        .exec();
+    } else {
+      console.log(req.body.radioChoice);
+      items = await Airplanes.find(
+        {
+          rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
+        },
+
+        {}
+      ).exec();
+    }
 
     if (!errors.isEmpty()) {
       // errors found re-render
@@ -69,8 +103,6 @@ exports.vehicle_compare_post = [
       return;
     } else {
       //validation checked
-      console.log("test");
-      console.log(req.body.plane);
       res.render("vehicle_compare", {
         title: "Compare your vehicle",
         renderCompare: true,

@@ -16,6 +16,9 @@ block content
                         li 
                             a(href=item._id)=item.name
                             p BR: #{item.rating_RB}
+                            p Max climb rate: #{item.max_climb_RB} m/s
+                            p Max turn rate: #{item.turn_time_RB} s
+                            p Max speed: #{item.max_speed_RB} Km/h
         else
             form(method='POST')
                 div.form-group 
@@ -24,14 +27,7 @@ block content
                         option(value='') --Please select an airplane--
                             each airplane in airplanes 
                                 option(value=`${airplane.name}@BREAK@${airplane.rating_RB}`)=airplane.name
-
-                    
-
-                    
-                            
-                //- div.form-group 
-                //-     label(for='plane') Select your plane 
-                //-     input(type='search' name='plane' required)
+        
                 div.form-group
                     label(for='brtarget') Select what BR you'd like to compare your plane to 
                     select#br.form-control(name='br' required)
@@ -40,7 +36,17 @@ block content
                         option(value='0.3') 0.3
                         option(value='0.7') 0.7
                         option(value='1') 1
-
+                div.form-group 
+                    label(for='sortType') How would you like to short the results?
+                        br
+                        label(for='radioChoice') Speed - fastest to slowest
+                        input#sortChoice1.form-control(type='radio' name='radioChoice' value='speedDesc')
+                        br
+                        label(for='radioChoice') Turn rate - fastest to slowest
+                        input#sortChoice2.form-control(type='radio' name='radioChoice' value='turnAsc')
+                        br
+                        label(for='radioChoice') Climb rate - fastest to slowest
+                        input#sortChoice3.form-control(type='radio' name='radioChoice' value='climbDesc')
 
                 button.btn.btn-primary(type='submit') Submit
                 
