@@ -1,6 +1,7 @@
 const Airplanes = require("../models/airplaneModel");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const stat_helper = require("../lib/vehicle_stat_helper");
 // const bodyParser = require("body-parser");
 // const cheerio = require("cheerio");
 // const axios = require("axios");
@@ -41,6 +42,20 @@ exports.vehicle_compare_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+
+    // convert ugly req string to object
+    const plane = stat_helper.parsePOSTstring(req.body.plane);
+    // convert battle ratings, return as object
+    const ratingRangeObj = stat_helper.convertRating(plane.rating, req.body.br);
+
+    const items = await Airplanes.find(
+      {
+        rating_RB: { $gt: ratingRangeObj.min, $lt: ratingRangeObj.max },
+      },
+      "name",
+      {}
+    ).exec();
+
     // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
     // const airplanes = await Airplanes.find({}, "name", {}).exec();
 
@@ -55,14 +70,14 @@ exports.vehicle_compare_post = [
     } else {
       //validation checked
       console.log("test");
-      console.log(typeof req.body.plane);
+      console.log(req.body.plane);
       res.render("vehicle_compare", {
         title: "Compare your vehicle",
         renderCompare: true,
         br: req.body.br,
-        name: req.body.plane,
-        plane_br: req.body.plane,
-        // items: items,
+        name: plane.name,
+        plane_br: plane.rating,
+        items: items,
       });
     }
 

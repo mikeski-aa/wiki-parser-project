@@ -7,19 +7,26 @@ block content
             p You chose: #{name} 
             p Your plane's Battle Rating: #{plane_br}
             p The BR range you picked: +- #{br}
+            hr
+            p Planes you might face at your BR
             if items 
+                p=items.length
                 ul 
                     each item in items 
                         li 
-                            p #{item.name} 
+                            a(href=item._id)=item.name
         else
             form(method='POST')
                 div.form-group 
                     label(for='plane')
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
-                        each airplane in airplanes 
-                            option(value=airplane)=airplane.name
+                            each airplane in airplanes 
+                                option(value=`${airplane.name} ${airplane.rating_RB}`)=airplane.name
+
+                    
+
+                    
                             
                 //- div.form-group 
                 //-     label(for='plane') Select your plane 
