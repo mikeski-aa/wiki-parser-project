@@ -1,5 +1,6 @@
 const Airplanes = require("../models/airplaneModel");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 // const bodyParser = require("body-parser");
 // const cheerio = require("cheerio");
 // const axios = require("axios");
@@ -22,20 +23,44 @@ exports.all_vehicles = asyncHandler(async (req, res, next) => {
 // GET request handle for list of sorted planes
 // example sort, i will need to create others
 
-exports.vehicle_list = asyncHandler(async (req, res, next) => {
-  const airplanes = await Airplanes.find({
-    max_speed_RB_upgraded: { $gt: 1 },
-  })
-    .sort({ max_speed_RB_upgraded: -1 })
-    .exec();
-  res.render("vehicle_list_view", {
-    title: "Max upgraded speed",
+exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
+  const airplanes = await Airplanes.find({}, "name", {}).exec();
+  console.log(airplanes);
+  res.render("vehicle_compare", {
+    title: "Compare planes",
     airplanes: airplanes,
   });
 });
 
+// post request for submitting the form
+exports.vehicle_compare_post = [
+  body("name").isLength({ min: 1 }).trim(),
+  body("br").isLength({ min: 1 }).trim(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const airplanes = await Airplanes.find({}, "name", {}).exec();
+
+    if (!errors) {
+      // errors in validation of post request
+      res.render("vehicle_compare", {
+        title: "Compare planes",
+        airplanes: airplanes,
+        errors: errors.array(),
+      });
+    } else {
+      //validation checked
+
+      res.render("new_compare", {
+        title: "Comparing a vehicle",
+        br: req.body.br,
+        name: req.body.name,
+      });
+    }
+  }),
+];
 // get request for plane details
-exports.vehicle_detail = asyncHandler(async (req, res, next) => {
+exports.exports.vehicle_detail = asyncHandler(async (req, res, next) => {
   const vehicle = await Airplanes.findById(req.params.id).exec();
 
   console.log(vehicle);

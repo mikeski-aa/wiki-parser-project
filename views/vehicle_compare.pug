@@ -1,0 +1,47 @@
+extends layout 
+
+block content 
+    div(class="mainCont")
+        h1=title
+        form(method='POST')
+            div.form-group 
+                label(for='planes')
+                select#name.form-control(name='br' required)
+                    option(value='') --Please select an airplane--
+                    each airplane in airplanes 
+                        option(value=airplane.name)=airplane.name
+            //- div.form-group 
+            //-     label(for='plane') Select your plane 
+            //-     input(type='search' name='plane' required)
+            div.form-group
+                label(for='brtarget') Select what BR you'd like to compare your plane to 
+                select#br.form-control(name='br' required)
+                    option(value='') --Please select uptier/downtier range
+                    option(value='0') 0
+                    option(value='0.3') 0.3
+                    option(value='0.7') 0.7
+                    option(value='1') 1
+            button.btn.btn-primary(type='submit') Submit
+            
+            if errors 
+                ul 
+                    for errors in errors 
+                        li!=errors.msg
+
+
+
+
+
+
+            //- ul 
+            //-     each airplane in airplanes 
+            //-         li  
+            //-             div(class='container')
+            //-                 a(href=airplane.url) #{airplane.name}
+            //-                 p Upgraded turn time #{airplane.turn_time_RB_upgraded}s
+            //-                 p Stock turn time #{airplane.turn_time_RB_stock}s
+            //-                 p Stock speed #{airplane.max_speed_RB_stock} Km/h
+            //-                 p Upgraded speed #{airplane.max_speed_RB_upgraded} Km/h
+            //-                 img(src=airplane.vehicle_image, width='200px')
+            //-                 img(src=airplane.dynamic_url, width='200px')
+            //-                 hr
