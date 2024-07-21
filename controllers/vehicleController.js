@@ -24,6 +24,7 @@ exports.all_vehicles = asyncHandler(async (req, res, next) => {
 // example sort, i will need to create others
 
 exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
+  // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
   const airplanes = await Airplanes.find({}, "name", {}).exec();
   console.log(airplanes);
   res.render("vehicle_compare", {
@@ -33,34 +34,57 @@ exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
 });
 
 // post request for submitting the form
+// needs to get fixed. probably need to pass through plane RB with post request
 exports.vehicle_compare_post = [
-  body("name").isLength({ min: 1 }).trim(),
   body("br").isLength({ min: 1 }).trim(),
+  body("plane").isLength({ min: 1 }).trim(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+    const [lookup, items] = await Promise.all([
+      Airplanes.find({ name: req.body.plane }, "rating_RB", {}).exec(),
+      Airplanes.find(
+        {
+          rating_RB: lookup.rating_RB,
+        },
+        "name",
+        {}
+      ).exec(),
+    ]);
+    // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
     const airplanes = await Airplanes.find({}, "name", {}).exec();
 
-    if (!errors) {
-      // errors in validation of post request
+    if (!errors.isEmpty()) {
+      // errors found re-render
       res.render("vehicle_compare", {
         title: "Compare planes",
         airplanes: airplanes,
         errors: errors.array(),
       });
+      return;
     } else {
       //validation checked
-
-      res.render("new_compare", {
-        title: "Comparing a vehicle",
+      console.log("test");
+      res.render("vehicle_compare", {
+        title: "Compare your vehicle",
+        renderCompare: true,
         br: req.body.br,
-        name: req.body.name,
+        name: req.body.plane,
+        items: items,
       });
     }
+
+    // res.render("vehicle_compare", {
+    //   title: "Comparing a vehicle",
+    //   renderCompare: true,
+    //   br: req.body.br,
+    //   name: req.body.name,
+    // });
   }),
 ];
+
 // get request for plane details
-exports.exports.vehicle_detail = asyncHandler(async (req, res, next) => {
+exports.vehicle_detail_get = asyncHandler(async (req, res, next) => {
   const vehicle = await Airplanes.findById(req.params.id).exec();
 
   console.log(vehicle);
