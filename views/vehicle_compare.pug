@@ -8,9 +8,10 @@ block content
             p Your plane's Battle Rating: #{plane_br}
             p The BR range you picked: +- #{br}
             hr
-            p Planes you might face at your BR
+           
             if items 
-                p=items.length
+                p Number of different planes you might face at your rating: #{items.length}
+                hr
                 ul 
                     each item in items 
                         li 
@@ -37,7 +38,7 @@ block content
                         option(value='0.7') 0.7
                         option(value='1') 1
                 div.form-group 
-                    label(for='sortType') How would you like to short the results?
+                    label(for='sortType') How would you like to sort the results?
                         br
                         label(for='radioChoice') Speed - fastest to slowest
                         input#sortChoice1.form-control(type='radio' name='radioChoice' value='speedDesc')
