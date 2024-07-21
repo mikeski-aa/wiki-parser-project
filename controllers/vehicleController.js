@@ -43,7 +43,8 @@ exports.vehicle_compare_post = [
     const ratingRangeObj = stat_helper.convertRating(plane.rating, req.body.br);
     const items = await stat_helper.getDataFromInput(
       req.body.radioChoice,
-      ratingRangeObj
+      ratingRangeObj,
+      plane
     );
 
     if (!errors.isEmpty()) {
