@@ -23,7 +23,7 @@ block content
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
                             each airplane in airplanes 
-                                option(value=`${airplane.name} ${airplane.rating_RB}`)=airplane.name
+                                option(value=`${airplane.name}@BREAK@${airplane.rating_RB}`)=airplane.name
 
                     
 

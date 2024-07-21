@@ -38,7 +38,7 @@ exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
 // needs to get fixed. probably need to pass through plane RB with post request
 exports.vehicle_compare_post = [
   body("br").isLength({ min: 1 }).trim(),
-  body("plane").isLength({ min: 1 }).trim(),
+  body("plane").isLength({ min: 1 }),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
