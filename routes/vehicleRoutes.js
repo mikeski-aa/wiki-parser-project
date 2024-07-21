@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const parseController = require("../controllers/parseController");
+const vehicleController = require("../controllers/vehicleController");
 
 // get praser for vehicl list
 
-router.get("/", parseController.all_vehicles);
+router.get("/", vehicleController.all_vehicles);
 
 // GET parser for airplane list
-router.get("/airplane_list", parseController.vehicle_list);
+router.get("/compare", vehicleController.compare);
 
-router.get("/:id/", parseController.vehicle_detail);
+router.get("/:id/", vehicleController.vehicle_detail);
 
 // TEST GET
-router.get("/hello", parseController.hello);
+router.get("/hello", vehicleController.hello);
 
 module.exports = router;
