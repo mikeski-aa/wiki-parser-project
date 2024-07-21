@@ -25,7 +25,7 @@ exports.all_vehicles = asyncHandler(async (req, res, next) => {
 
 exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
   // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
-  const airplanes = await Airplanes.find({}, "name", {}).exec();
+  const airplanes = await Airplanes.find({}, "name rating_RB", {}).exec();
   console.log(airplanes);
   res.render("vehicle_compare", {
     title: "Compare planes",
@@ -41,18 +41,8 @@ exports.vehicle_compare_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    const [lookup, items] = await Promise.all([
-      Airplanes.find({ name: req.body.plane }, "rating_RB", {}).exec(),
-      Airplanes.find(
-        {
-          rating_RB: lookup.rating_RB,
-        },
-        "name",
-        {}
-      ).exec(),
-    ]);
     // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
-    const airplanes = await Airplanes.find({}, "name", {}).exec();
+    // const airplanes = await Airplanes.find({}, "name", {}).exec();
 
     if (!errors.isEmpty()) {
       // errors found re-render
@@ -65,12 +55,14 @@ exports.vehicle_compare_post = [
     } else {
       //validation checked
       console.log("test");
+      console.log(typeof req.body.plane);
       res.render("vehicle_compare", {
         title: "Compare your vehicle",
         renderCompare: true,
         br: req.body.br,
         name: req.body.plane,
-        items: items,
+        plane_br: req.body.plane,
+        // items: items,
       });
     }
 

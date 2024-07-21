@@ -5,11 +5,13 @@ block content
         h1=title
         if renderCompare 
             p You chose: #{name} 
+            p Your plane's Battle Rating: #{plane_br}
             p The BR range you picked: +- #{br}
-            ul 
-                each item in items 
-                    li 
-                        p #{item.name} 
+            if items 
+                ul 
+                    each item in items 
+                        li 
+                            p #{item.name} 
         else
             form(method='POST')
                 div.form-group 
@@ -17,7 +19,8 @@ block content
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
                         each airplane in airplanes 
-                            option(value=airplane.name)=airplane.name
+                            option(value=airplane)=airplane.name
+                            
                 //- div.form-group 
                 //-     label(for='plane') Select your plane 
                 //-     input(type='search' name='plane' required)
@@ -29,6 +32,8 @@ block content
                         option(value='0.3') 0.3
                         option(value='0.7') 0.7
                         option(value='1') 1
+
+
                 button.btn.btn-primary(type='submit') Submit
                 
                 if errors 
