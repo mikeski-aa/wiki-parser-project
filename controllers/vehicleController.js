@@ -50,9 +50,9 @@ exports.vehicle_compare_post = [
 
     const items = await Airplanes.find(
       {
-        rating_RB: { $gt: ratingRangeObj.min, $lt: ratingRangeObj.max },
+        rating_RB: { $gte: ratingRangeObj.min, $lte: ratingRangeObj.max },
       },
-      "name",
+      "name rating_RB",
       {}
     ).exec();
 

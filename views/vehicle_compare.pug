@@ -15,6 +15,7 @@ block content
                     each item in items 
                         li 
                             a(href=item._id)=item.name
+                            p BR: #{item.rating_RB}
         else
             form(method='POST')
                 div.form-group 
