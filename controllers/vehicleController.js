@@ -63,7 +63,7 @@ exports.vehicle_compare_post = [
         br: req.body.br,
         name: plane.name,
         plane_br: plane.rating,
-        items: items,
+        items: items.response,
       });
     }
 
