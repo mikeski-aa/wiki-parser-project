@@ -21,7 +21,7 @@ exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
   const airplanes = await Airplanes.find({}, "name rating_RB", {})
     .sort({ name: 1 })
     .exec();
-  console.log(airplanes);
+  // console.log(airplanes);
   res.render("vehicle_compare", {
     title: "Compare planes",
     airplanes: airplanes,
