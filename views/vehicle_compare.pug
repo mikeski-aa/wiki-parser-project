@@ -1,36 +1,8 @@
 extends layout 
 
 block content 
-    script.
-        console.log("Testing inline script");
-        function myFunction() {
-        console.log("Testing inline script");
-        // Declare variables
-        var input, filter, ul, li, a, i, txtValue;
-        input = document.getElementById('myInput');
-        filter = input.value.toUpperCase();
-        ul = document.getElementById("myUL");
-        li = ul.getElementsByTagName('li');
-        console.log(input.innerText);
-        ul.style.display = "block";
-        
-
-        // Loop through all list items, and hide those who don't match the search query
-        for (i = 0; i < li.length; i++) {
-            a = li[i].getElementsByTagName("a")[0];
-            txtValue = a.textContent || a.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-            } else {
-            li[i].style.display = "none";
-            }
-            //- ul.style.height = `${i*1.5}px`;
-        }
-        };
-
-        function myTestFunc() {
-            console.log('')
-        }
+    script(src="vehiclesearch.js")
+    
     div(class="mainCont")
         
         h1=title
@@ -60,7 +32,7 @@ block content
                     ul(id="myUL")
                         each airplane in airplanes 
                             li 
-                                a(href='#' onclick=`myTestFunc()`)=airplane.name
+                                a(href='#' onclick=``)=airplane.name
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
                             each airplane in airplanes 
