@@ -11,6 +11,9 @@ block content
         filter = input.value.toUpperCase();
         ul = document.getElementById("myUL");
         li = ul.getElementsByTagName('li');
+        console.log(input.innerText);
+        ul.style.display = "block";
+        
 
         // Loop through all list items, and hide those who don't match the search query
         for (i = 0; i < li.length; i++) {
@@ -21,7 +24,12 @@ block content
             } else {
             li[i].style.display = "none";
             }
+            //- ul.style.height = `${i*1.5}px`;
         }
+        };
+
+        function myTestFunc(v) {
+            console.log(v)
         }
     div(class="mainCont")
         
@@ -52,7 +60,7 @@ block content
                     ul(id="myUL")
                         each airplane in airplanes 
                             li 
-                                a(href='#')=airplane.name
+                                a(href='#' onclick='myTestFunc(airplane.name)')=airplane.name
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
                             each airplane in airplanes 
