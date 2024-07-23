@@ -28,8 +28,8 @@ block content
         }
         };
 
-        function myTestFunc(v) {
-            console.log(v)
+        function myTestFunc() {
+            console.log('')
         }
     div(class="mainCont")
         
@@ -60,7 +60,7 @@ block content
                     ul(id="myUL")
                         each airplane in airplanes 
                             li 
-                                a(href='#' onclick='myTestFunc(airplane.name)')=airplane.name
+                                a(href='#' onclick=`myTestFunc()`)=airplane.name
                     select#plane.form-control(name='plane' required)
                         option(value='') --Please select an airplane--
                             each airplane in airplanes 
