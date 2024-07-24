@@ -18,9 +18,7 @@ exports.all_vehicles = asyncHandler(async (req, res, next) => {
 
 exports.vehicle_compare_get = asyncHandler(async (req, res, next) => {
   // const airplanes = [{ name: "Yak-3" }, { name: "BF-109" }];
-  const airplanes = await Airplanes.find({}, "name rating_RB", {})
-    .sort({ name: 1 })
-    .exec();
+  const airplanes = await Airplanes.find({}, {}).sort({ name: 1 }).exec();
   // console.log(airplanes);
   res.render("vehicle_compare", {
     title: "Compare planes",
@@ -63,6 +61,12 @@ exports.vehicle_compare_post = [
         br: req.body.br,
         name: plane.name,
         plane_br: plane.rating,
+        category: plane.category,
+        max_speed: plane.max_speed,
+        max_climb: plane.max_climb,
+        nation: plane.nation,
+        wiki: plane.wiki,
+        turn_rate: plane.turn_rate,
         items: items.response,
       });
     }

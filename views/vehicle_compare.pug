@@ -9,45 +9,19 @@ block content
         let upCase = input.value.toUpperCase();
         let items = document.querySelectorAll(".planeopt");
 
-        console.log(items[2].textContent)
-        console.log(items[2].textContent.toUpperCase().includes(upCase));
-
         for (i = 0; i < items.length; i++) { 
             let capital = items[i].textContent.toUpperCase()
 
             if (capital.includes(upCase)) {
-                items[i].style.display = ""
+                items[i].style.display = "";
+                items[i].selected = "selected";
                 console.log('found something')
             } else {
                 items[i].style.display = "none"
-            }
-
+            }} 
         }
         
-        }
-        
-        // Loop through all list items, and hide those who don't match the search query
-        //- for (i = 0; i < items.length; i++) {
-      
 
-        //-     if (items[i].textContent.includes(input)) {
-        //-         console.log('found something');
-        //-         items[i].style.display = ""
-        //-     } else {
-        //-         items[i].style.display = "none"
-        //-     }
-                
-            
-
-            //- a = item[i].getElementsByTagName("option")[0];
-            //- console.log(a.innerText);
-            //- txtValue = a.textContent || a.innerText;
-            //- if (txtValue.toUpperCase().indexOf(upCase) > -1) {
-            //- item[i].style.display = "";
-            //- } else {
-            //- item[i].style.display = "none";
-            //- }
-            //- ul.style.height = `${i*1.5}px`;
         
      
 
@@ -60,6 +34,12 @@ block content
             p You chose: #{name} 
             p Your plane's Battle Rating: #{plane_br}
             p The BR range you picked: +- #{br}
+            p Category: #{category}
+            p Turn rate is #{turn_rate}s 
+            p Climb rate is #{max_climb} m/s
+            p Max speed #{max_speed} Km/h
+            p Nation: #{nation}
+            a(href=wiki) Wiki link
             hr
            
             if items 
@@ -73,21 +53,20 @@ block content
                             p Max climb rate: #{item.max_climb_RB} m/s
                             p Max turn rate: #{item.turn_time_RB} s
                             p Max speed: #{item.max_speed_RB} Km/h
+                            p Nation: #{item.nation}
+                            a(href=item.wiki_url) Wiki url
+                            hr
         else
             form(method='POST')
-                div.form-group 
-                    label(for='plane')
+                div.search-group 
+                    label(for='plane') Search for a plane                 
                     input(type="text" id='myInput' name='myInput' onkeyup='listFilter()' placeholder='Search for names...')
-                    //- ul(id="myUL")
-                    //-     each airplane in airplanes 
-                    //-         li 
-                    //-             a(href='#' onclick=`((e) => myTestFunc())`)=airplane.name
                     select#plane.form-control(name='plane' required)
                         option(class='planeopt' value='') --Please select an airplane--
                             each airplane in airplanes 
-                                option(class='planeopt' value=`${airplane.name}@BREAK@${airplane.rating_RB}`)=airplane.name
+                                option(class='planeopt' value=`${airplane.name}@BREAK@${airplane.turn_time_RB}@BREAK@${airplane.max_speed_RB}@BREAK@${airplane.max_climb_RB}@BREAK@${airplane.category}@BREAK@${airplane.nation}@BREAK@${airplane.wiki_url}@BREAK@${airplane.rating_RB}`)=airplane.name
         
-                div.form-group
+                div.brselect
                     label(for='brtarget') Select what BR you'd like to compare your plane to 
                     select#br.form-control(name='br' required)
                         option(value='') --Please select uptier/downtier range
@@ -116,20 +95,3 @@ block content
                     ul 
                         for error in errors 
                             li!=errors.msg
-
-
-
-
-
-            //- ul 
-            //-     each airplane in airplanes 
-            //-         li  
-            //-             div(class='container')
-            //-                 a(href=airplane.url) #{airplane.name}
-            //-                 p Upgraded turn time #{airplane.turn_time_RB_upgraded}s
-            //-                 p Stock turn time #{airplane.turn_time_RB_stock}s
-            //-                 p Stock speed #{airplane.max_speed_RB_stock} Km/h
-            //-                 p Upgraded speed #{airplane.max_speed_RB_upgraded} Km/h
-            //-                 img(src=airplane.vehicle_image, width='200px')
-            //-                 img(src=airplane.dynamic_url, width='200px')
-            //-                 hr
