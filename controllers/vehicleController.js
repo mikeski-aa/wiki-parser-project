@@ -2,6 +2,7 @@ const Airplanes = require("../models/airplaneModel");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const stat_helper = require("../lib/vehicle_stat_helper");
+const { response } = require("../app");
 
 // get all vehicle list
 exports.all_vehicles = asyncHandler(async (req, res, next) => {
@@ -44,7 +45,7 @@ exports.vehicle_compare_post = [
       ratingRangeObj,
       plane
     );
-
+    console.log(items);
     if (!errors.isEmpty()) {
       // errors found re-render
       res.render("vehicle_compare", {
@@ -68,6 +69,8 @@ exports.vehicle_compare_post = [
         wiki: plane.wiki,
         turn_rate: plane.turn_rate,
         items: items.response,
+        position_str: items.bonusString.xd.position,
+        result_str: items.bonusString.xd.stringResult,
       });
     }
 
