@@ -39,7 +39,7 @@ block content
             p Climb rate is #{max_climb} m/s
             p Max speed #{max_speed} Km/h
             p Nation: #{nation}
-            a(href=wiki) Wiki link
+            a(href=wiki target="_blank") Wiki link
             hr
            
             if items 
@@ -48,13 +48,13 @@ block content
                 ul
                     each item in items 
                         li 
-                            a(href=item._id)=item.name
+                            a(href=item._id target="_blank")=item.name
                             p BR: #{item.rating_RB}
                             p Max climb rate: #{item.max_climb_RB} m/s
                             p Max turn rate: #{item.turn_time_RB} s
                             p Max speed: #{item.max_speed_RB} Km/h
                             p Nation: #{item.nation}
-                            a(href=item.wiki_url) Wiki url
+                            a(href=item.wiki_url target="_blank") Wiki url
                             hr
         else
             form(method='POST')
