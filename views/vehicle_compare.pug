@@ -1,8 +1,57 @@
 extends layout 
 
 block content 
-    script(src="vehiclesearch.js")
-    
+
+    script.
+        function listFilter() {
+        // Declare variables
+        let input = document.getElementById('myInput');
+        let upCase = input.value.toUpperCase();
+        let items = document.querySelectorAll(".planeopt");
+
+        console.log(items[2].textContent)
+        console.log(items[2].textContent.toUpperCase().includes(upCase));
+
+        for (i = 0; i < items.length; i++) { 
+            let capital = items[i].textContent.toUpperCase()
+
+            if (capital.includes(upCase)) {
+                items[i].style.display = ""
+                console.log('found something')
+            } else {
+                items[i].style.display = "none"
+            }
+
+        }
+        
+        }
+        
+        // Loop through all list items, and hide those who don't match the search query
+        //- for (i = 0; i < items.length; i++) {
+      
+
+        //-     if (items[i].textContent.includes(input)) {
+        //-         console.log('found something');
+        //-         items[i].style.display = ""
+        //-     } else {
+        //-         items[i].style.display = "none"
+        //-     }
+                
+            
+
+            //- a = item[i].getElementsByTagName("option")[0];
+            //- console.log(a.innerText);
+            //- txtValue = a.textContent || a.innerText;
+            //- if (txtValue.toUpperCase().indexOf(upCase) > -1) {
+            //- item[i].style.display = "";
+            //- } else {
+            //- item[i].style.display = "none";
+            //- }
+            //- ul.style.height = `${i*1.5}px`;
+        
+     
+
+
     div(class="mainCont")
         
         h1=title
@@ -28,15 +77,15 @@ block content
             form(method='POST')
                 div.form-group 
                     label(for='plane')
-                    input(type="text" id='myInput' name='myInput' onkeyup='myFunction()' placeholder='Search for names...')
-                    ul(id="myUL")
-                        each airplane in airplanes 
-                            li 
-                                a(href='#' onclick=``)=airplane.name
+                    input(type="text" id='myInput' name='myInput' onkeyup='listFilter()' placeholder='Search for names...')
+                    //- ul(id="myUL")
+                    //-     each airplane in airplanes 
+                    //-         li 
+                    //-             a(href='#' onclick=`((e) => myTestFunc())`)=airplane.name
                     select#plane.form-control(name='plane' required)
-                        option(value='') --Please select an airplane--
+                        option(class='planeopt' value='') --Please select an airplane--
                             each airplane in airplanes 
-                                option(value=`${airplane.name}@BREAK@${airplane.rating_RB}`)=airplane.name
+                                option(class='planeopt' value=`${airplane.name}@BREAK@${airplane.rating_RB}`)=airplane.name
         
                 div.form-group
                     label(for='brtarget') Select what BR you'd like to compare your plane to 
