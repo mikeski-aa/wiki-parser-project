@@ -50,3 +50,7 @@ select option {
 .nav > ul > li {
   padding-bottom: 4px;
 }
+
+.planeCard {
+  display: flex;
+}

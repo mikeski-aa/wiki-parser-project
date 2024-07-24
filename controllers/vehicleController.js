@@ -2,7 +2,7 @@ const Airplanes = require("../models/airplaneModel");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const stat_helper = require("../lib/vehicle_stat_helper");
-const { response } = require("../app");
+const detail_helper = require("../lib/vehicle_details_helper").ratingsCompare;
 
 // get all vehicle list
 exports.all_vehicles = asyncHandler(async (req, res, next) => {
@@ -86,8 +86,9 @@ exports.vehicle_compare_post = [
 // get request for plane details
 exports.vehicle_detail_get = asyncHandler(async (req, res, next) => {
   const vehicle = await Airplanes.findById(req.params.id).exec();
+  const stats = await detail_helper(vehicle);
 
-  console.log(vehicle);
+  console.log(stats);
 
   if (vehicle === null) {
     // no vehicle found
@@ -100,6 +101,7 @@ exports.vehicle_detail_get = asyncHandler(async (req, res, next) => {
   res.render("vehicle_details", {
     title: "Vehicle details",
     airplane: vehicle,
+    stats: stats,
   });
 });
 

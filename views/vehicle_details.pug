@@ -3,8 +3,19 @@ extends layout
 block content 
     div(class="mainCont")
         h1=title 
-        p=airplane.name
-        img(src=airplane.vehicle_image, width='200px')
-        img(src=airplane.dynamic_url, width='200px')
+        div(class='planeCard')
+            div(class='planeInfo')
+                p=airplane.name
+                p Your plane's Battle Rating: #{airplane.rating_RB}
+                p Category: #{airplane.category}
+                p Turn rate is #{airplane.turn_time_RB}s 
+                p Climb rate is #{airplane.max_climb_RB} m/s
+                p Max speed #{airplane.max_speed_RB} Km/h
+                p Nation: #{airplane.nation}
+                a(href=airplane.wiki_url target="_blank") Wiki link
+                p Your vehicle is faster than #[strong #{stats.speedArray[1]}%] of vehicles
+            div(class='planeImg')
+                img(src=airplane.vehicle_image, width='400px')
+                img(src=airplane.dynamic_url, width='400px')
         if error
             p=error
