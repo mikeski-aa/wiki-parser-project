@@ -13,7 +13,9 @@ block content
                 p Max speed #{airplane.max_speed_RB} Km/h
                 p Nation: #{airplane.nation}
                 a(href=airplane.wiki_url target="_blank") Wiki link
-                p Your vehicle is faster than #[strong #{stats.speedArray[1]}%] of vehicles
+                p Your vehicle is faster than #[strong #{stats.speedArray[1]}%] of vehicles at this battle rating
+                p Your turns faster than #[strong #{stats.turnArray[1]}%] of vehicles at this battle rating
+                p Your vehicle is faster than #[strong #{stats.climbArray[1]}%] of vehicles at this battle rating
             div(class='planeImg')
                 img(src=airplane.vehicle_image, width='400px')
                 img(src=airplane.dynamic_url, width='400px')
